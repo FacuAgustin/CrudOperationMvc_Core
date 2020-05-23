@@ -11,7 +11,7 @@ namespace CrudOperationMvc_Core.Controllers
 {
     public class StudentController : Controller
     {
-        StudentContextDB StudentDB = new StudentContextDB();
+        readonly StudentContextDB StudentDB = new StudentContextDB();
 
         // GET: StudentController
         public ActionResult Index()
@@ -23,7 +23,7 @@ namespace CrudOperationMvc_Core.Controllers
         // GET: StudentController/Details/5
         public ActionResult Details(int id)
         {
-            if (id==null)
+            if (id<=0)
             {
                 return NotFound();
             }
@@ -64,7 +64,7 @@ namespace CrudOperationMvc_Core.Controllers
         // GET: StudentController/Edit/5
         public ActionResult Edit(int id)
         {
-            if (id == null)
+            if (id <= 0)
             {
                 return NotFound();
             }
@@ -83,7 +83,7 @@ namespace CrudOperationMvc_Core.Controllers
         {
             try
             {
-                if (id==null)
+                if (id <= 0)
                 {
                     return NotFound();
                 }
@@ -103,16 +103,22 @@ namespace CrudOperationMvc_Core.Controllers
         // GET: StudentController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            if (id <= 0)
+            {
+                return NotFound();
+            }
+            Student student = StudentDB.GetStudentById(id);
+            return View(student);
         }
 
         // POST: StudentController/Delete/5
-        [HttpPost]
+        [HttpPost ,ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteConfirmed(int id)
         {
             try
             {
+                StudentDB.DeleteStudent(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
