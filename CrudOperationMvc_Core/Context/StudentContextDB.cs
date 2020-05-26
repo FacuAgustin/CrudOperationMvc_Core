@@ -10,7 +10,7 @@ namespace CrudOperationMvc_Core.Context
 {
     public class StudentContextDB
     {
-        readonly string connectionString= "Data Source = EQUIPO; Integrated Security = true; Initial Catalog = CrudOperation_MvcCore;";
+        readonly string connectionString= @"Data Source = DESKTOP-FMD0NPE\SQLEXPRESS; Integrated Security = true; Initial Catalog = CrudOperation_MvcCore;";
 
         //this method help to get the student list
         public IEnumerable<Student> GetAllStudent()
